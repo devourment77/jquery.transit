@@ -41,7 +41,10 @@
     enabled: true,
 
     // Set this to false if you don't want to use the transition end property.
-    useTransitionEnd: false
+    useTransitionEnd: false,
+
+    // enable to force chrome to use hardware acceleration
+    use3dChrome: true
   };
 
   var div = document.createElement('div');
@@ -165,7 +168,7 @@
       // forcing Chrome to not use the 3d transforms as well.  Not sure if
       // translate is affectede, but not risking it.  Detection code from
       // http://davidwalsh.name/detecting-google-chrome-javascript
-      if (support.transform === 'WebkitTransform' && !isChrome) {
+      if (support.transform === 'WebkitTransform' && (!isChrome || $.transit.use3dChrome)) {
         elem.style[support.transform] = value.toString(true);
       } else {
         elem.style[support.transform] = value.toString();
@@ -727,7 +730,7 @@
   // toMS('fast') => $.fx.speeds[i] => "200ms"
   // toMS('normal') //=> $.fx.speeds._default => "400ms"
   // toMS(10) //=> '10ms'
-  // toMS('100ms') //=> '100ms'  
+  // toMS('100ms') //=> '100ms'
   //
   function toMS(duration) {
     var i = duration;
